@@ -1,0 +1,24 @@
+{
+  "packages": [
+    {
+      "name": "drawio-desktop",
+      "source": "github",
+      "description": "official electron build of draw.io",
+      "ghuser": "jgraph",
+      "ghrepo": "drawio-desktop"
+    },
+    {
+      "name": "FreeTube",
+      "source": "github",
+      "description": "An Open Source YouTube app for privacy",
+      "ghuser": "FreeTubeApp",
+      "ghrepo": "FreeTube"
+    },
+    {
+      "name": "OnlyOffice",
+      "source": "website",
+      "description": "Work with documents, spreadsheets, presentations, fillable forms and PDF files on your PC",
+      "link": "https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors_amd64.deb"
+    }
+  ]
+}
