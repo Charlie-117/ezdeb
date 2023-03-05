@@ -1,14 +1,14 @@
 {
   "packages": [
     {
-      "name": "drawio-desktop",
+      "name": "draw.io",
       "source": "github",
       "description": "official electron build of draw.io",
       "ghuser": "jgraph",
       "ghrepo": "drawio-desktop"
     },
     {
-      "name": "FreeTube",
+      "name": "freetube",
       "source": "github",
       "description": "An Open Source YouTube app for privacy",
       "ghuser": "FreeTubeApp",
@@ -19,6 +19,27 @@
       "source": "website",
       "description": "Work with documents, spreadsheets, presentations, fillable forms and PDF files on your PC",
       "link": "https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors_amd64.deb"
+    },
+    {
+      "name": "gh",
+      "source": "github",
+      "description": "gh is GitHub on the command line",
+      "ghuser": "cli",
+      "ghrepo": "cli"
+    },
+    {
+      "name": "balena-etcher",
+      "source": "github",
+      "description": "Flash OS images to SD cards & USB drives, safely and easily",
+      "ghuser": "balena-io",
+      "ghrepo": "etcher"
+    },
+    {
+      "name": "bottom",
+      "source": "github",
+      "description": "Yet another cross-platform graphical process/system monitor",
+      "ghuser": "ClementTsang",
+      "ghrepo": "bottom"
     }
   ]
 }
