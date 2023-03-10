@@ -95,6 +95,13 @@ var uninstallCmd = &cobra.Command{
 
 		*/
 
+		// init logging
+		logger, err := InitLogger()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
 		if (len(args) < 1) {
 			fmt.Println("Please provide a package name")
 			return
@@ -122,6 +129,7 @@ var uninstallCmd = &cobra.Command{
 					fmt.Printf("\n\nPackage %v successfully uninstalled but config not removed\n", pkg)
 				} else {
 					fmt.Printf("\n\nPackage %v successfully uninstalled\n", pkg)
+					logger.Infof("uninstall: %v", pkg)
 				}
 			}
 		}

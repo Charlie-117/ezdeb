@@ -298,6 +298,13 @@ var installCmd = &cobra.Command{
 
 		*/
 
+		// init logging
+		logger, err := InitLogger()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
 		if (len(args) < 1) {
 			fmt.Println("Please provide a package name")
 			return
@@ -321,6 +328,7 @@ var installCmd = &cobra.Command{
 				if location, err := fetchGithubRelease(ghuser, ghrepo); err == nil {
 					if err = installPackage(location); err == nil {
 						if err = storePackageDetails(pkg, debName); err == nil {
+							logger.Infof("install: %v", pkg)
 							fmt.Printf("\n\nPackage %v installed successfully\n", pkg)
 						} else {
 							fmt.Printf("\n\nPackage %v successfully installed but not logged", pkg)
@@ -338,6 +346,7 @@ var installCmd = &cobra.Command{
 				if location, err := fetchPackage(pkgurl); err == nil {
 					if err = installPackage(location); err == nil {
 						if err = storePackageDetails(pkg, debName); err == nil {
+							logger.Infof("install: %v", pkg)
 							fmt.Printf("\n\nPackage %v installed successfully\n", pkg)
 						} else {
 							fmt.Printf("\n\nPackage %v successfully installed but not logged", pkg)

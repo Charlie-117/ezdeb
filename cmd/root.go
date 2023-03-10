@@ -12,6 +12,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/sirupsen/logrus"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -87,4 +88,27 @@ func initConfig() {
 		syncCmd.Run(rootCmd, []string{})
 		panic(fmt.Errorf("Run the command again, if it doesn't work then contact us with the debug message"))
 	}
+}
+
+// logger function
+func InitLogger() (*logrus.Logger, error) {
+	// create logger object
+	logger := logrus.New()
+
+	// get home dir
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get home directory: %w", err)
+	}
+
+	logFile := filepath.Join(homeDir, ".ezdeb", "ezdeb.log")
+	f, err := os.OpenFile(logFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open log file: %w", err)
+	}
+
+	// set log output to file
+	logger.SetOutput(f)
+
+	return logger, nil
 }
