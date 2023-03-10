@@ -115,8 +115,16 @@ func fetchGithubRelease(ghuser string, ghrepo string) (string, error) {
 		"downloading",
 	)
 
+	// Create os.TempDir()/ezdeb if it doesn't exist
+	if _, err := os.Stat(filepath.Join(os.TempDir(), "ezdeb")); os.IsNotExist(err) {
+		err = os.Mkdir(filepath.Join(os.TempDir(), "ezdeb"), 0755)
+		if err != nil {
+			return "", fmt.Errorf("failed to create temporary directory: %v", err)
+		}
+	}
+
 	// create temporary file
-	debFileLoc := filepath.Join(os.TempDir(), asset.GetName())
+	debFileLoc := filepath.Join(os.TempDir(), "ezdeb", asset.GetName())
 	f, err := os.Create(debFileLoc)
 	if err != nil {
 		return "", fmt.Errorf("failed to create temporary file: %v", err)
@@ -189,8 +197,16 @@ func fetchPackage(url string) (string, error) {
 		"downloading",
 	)
 
+	// Create os.TempDir()/ezdeb if it doesn't exist
+	if _, err := os.Stat(filepath.Join(os.TempDir(), "ezdeb")); os.IsNotExist(err) {
+		err = os.Mkdir(filepath.Join(os.TempDir(), "ezdeb"), 0755)
+		if err != nil {
+			return "", fmt.Errorf("failed to create temporary directory: %v", err)
+		}
+	}
+
     // Create a temporary file to store the downloaded .deb package
-    debFileLoc := filepath.Join(os.TempDir(), debName)
+    debFileLoc := filepath.Join(os.TempDir(), "ezdeb", debName)
 	f, err := os.Create(debFileLoc)
 	if err != nil {
 		return "", fmt.Errorf("failed to create temporary file: %v", err)
