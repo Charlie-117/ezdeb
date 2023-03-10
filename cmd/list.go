@@ -6,6 +6,9 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -17,9 +20,48 @@ var listCmd = &cobra.Command{
 	Short: "List all available packages",
 	Long: `Usage: ezdeb list`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Available packages:\n")
 
 		count := 0
+
+		// List only installed packages if flag is set
+		if cmd.Flag("installed").Value.String() == "true" {
+			fmt.Println("Listing installed packages\n")
+
+			homeDir, err := os.UserHomeDir()
+			if err != nil {
+				fmt.Print("Error: failed to get user home directory")
+				return
+			}
+			pkgPath := filepath.Join(homeDir, ".ezdeb", "packages")
+
+			err = filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
+				if err != nil {
+					fmt.Print("Error: failed to access path")
+					return err
+				}
+				if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") {
+					// trim .json suffix from file name
+					fileName := strings.TrimSuffix(info.Name(), filepath.Ext(info.Name()))
+					fmt.Println(fileName)
+					count++
+				}
+				return nil
+			})
+			if err != nil {
+				fmt.Print("Error: failed to list packages")
+				return
+			}
+
+			if count == 0 {
+				fmt.Println("No packages installed")
+				return
+			}
+			fmt.Println("\nTotal number of installed packages:", count)
+			return
+		}
+
+		fmt.Println("Available packages:\n")
+
 		packages := viper.Get("packages").([]interface{})
 		for _, pkg := range packages {
 			pkgMap := pkg.(map[string]interface{})
@@ -29,9 +71,6 @@ var listCmd = &cobra.Command{
 		}
 
 		fmt.Println("\nTotal number of packages:", count)
-
-		// TODO: 
-			// add functionality to list only installed packages
 	},
 }
 
@@ -47,4 +86,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	listCmd.Flags().BoolP("installed", "i", false, "List only installed packages")
 }
