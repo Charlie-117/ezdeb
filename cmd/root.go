@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -18,9 +19,11 @@ var rootCmd = &cobra.Command{
 	Use:   "ezdeb",
 	Short: "Manage .deb packages with ease",
 	Long: `ezdeb is a tool to manage .deb packages sourced from GitHub and other websites.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		if (len(args) == 0) {
+			fmt.Println("No arguments provided. Run ezdeb --help for more information.")
+		}
+	 },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -29,6 +32,22 @@ func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
+	}
+
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		fmt.Printf("Failed to get home directory: %v\n", err)
+		return
+	}
+
+	listPath := filepath.Join(homeDir, ".ezdeb", "pkglist.json")
+	fileInfo, err := os.Stat(listPath)
+
+	listModTime := fileInfo.ModTime()
+	listAge := time.Since(listModTime)
+
+	if listAge > 24 * time.Hour {
+		fmt.Println("\n\n******\n\nPackage list is older than 24 hours. Run 'ezdeb sync' to update the package list.\n\n******")
 	}
 }
 
@@ -62,7 +81,10 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
+	// else print a msg and sync it
 	if err := viper.ReadInConfig(); err != nil {
-		panic(fmt.Errorf("Error: ", err))
+		fmt.Println("******\n\nPackage list does not exist.\nSyncing package list from repository.\n\n******")
+		syncCmd.Run(rootCmd, []string{})
+		panic(fmt.Errorf("Run the command again, if it doesn't work then contact us with the debug message"))
 	}
 }
