@@ -50,22 +50,41 @@ func readLog(action string) {
 	// return error if failed
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		fmt.Printf("failed to get home directory")
+		fmt.Println("failed to get home directory")
+		return
 	}
 
 	logFile := filepath.Join(homeDir, ".ezdeb", "ezdeb.log")
 
+	// check if log file size is 0
+	logInfo, err := os.Stat(logFile)
+	if err != nil {
+		fmt.Println("Failed to read log file, execute some action to generate it.")
+		return
+	}
+	if logInfo.Size() == 0 {
+		fmt.Println("Log file is empty")
+		return
+	}
+
+	// open the log file
 	file, err := os.Open(logFile)
 	if err != nil {
-		fmt.Printf("failed to open log file")
+		fmt.Println("Failed to open log file")
+		return
 	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 
+	// setup a counter
+	// check if the specified action is not present in the logFile
+	count := 0
+
 	// if action is all
 	// read all logs
 	if action == "all" {
+		count++
 		for scanner.Scan() {
 			logLine := 	scanner.Text()
 			fmt.Printf("time: %s action: %s package: %s\n", formatTime(logLine), formatAction(logLine), formatPkg(logLine))
@@ -75,6 +94,7 @@ func readLog(action string) {
 			logLine := 	scanner.Text()
 			if strings.Contains(logLine, "\"install") {
 				fmt.Printf("time: %s action: install package: %s\n", formatTime(logLine), formatPkg(logLine))
+				count++
 			}
 		}
 	} else if action == "uninstall" {
@@ -82,6 +102,7 @@ func readLog(action string) {
 			logLine := 	scanner.Text()
 			if strings.Contains(logLine, "uninstall") {
 				fmt.Printf("time: %s action: uninstall package: %s\n", formatTime(logLine), formatPkg(logLine))
+				count++
 			}
 		}
 	} else if action == "update" {
@@ -89,8 +110,13 @@ func readLog(action string) {
 			logLine := 	scanner.Text()
 			if strings.Contains(logLine, "update") {
 				fmt.Printf("time: %s action: update package: %s\n", formatTime(logLine), formatPkg(logLine))
+				count++
 			}
 		}
+	}
+
+	if count == 0 {
+		fmt.Println("Specified action is not present in the log file")
 	}
 }
 
