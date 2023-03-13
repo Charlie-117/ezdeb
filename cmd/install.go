@@ -53,9 +53,11 @@ func searchPkgDetails(pkgName string) bool {
 			if pkgMap["source"].(string) == "github" {
 				ghuser = pkgMap["ghuser"].(string)
 				ghrepo = pkgMap["ghrepo"].(string)
+				pkgurl = ""
 				return true
 			} else if pkgMap["source"].(string) == "website" {
 				pkgurl = pkgMap["url"].(string)
+				ghuser, ghrepo = "", ""
 				return true
 			}
 		}
