@@ -42,6 +42,11 @@ var infoCmd = &cobra.Command{
 				if pkgMap["source"] == "website" {
 					fmt.Println("Package link: ", pkgMap["link"])
 				}
+				if isInstalled(pkgName) {
+					fmt.Println("Installed: Yes")
+				} else {
+					fmt.Println("Installed: No")
+				}
 				return
 			}
 		}
