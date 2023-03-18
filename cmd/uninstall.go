@@ -103,7 +103,7 @@ var uninstallCmd = &cobra.Command{
 		}
 
 		if (len(args) < 1) {
-			fmt.Println("Please provide a package name")
+			fmt.Println(Red, "Please provide a package name", Reset)
 			return
 		}
 
@@ -112,23 +112,23 @@ var uninstallCmd = &cobra.Command{
 			fmt.Printf("\n\nUninstalling package %v\n", pkg)
 
 			if !(isInstalledU(pkg)) {
-				fmt.Printf("\n\nPackage %v is not installed\n", pkg)
+				fmt.Println(Red, "\n\nPackage ", pkg, " is not installed", Reset)
 				continue
 			}
 
 			if !(searchPkgDetailsU(pkg)) {
-				fmt.Printf("\n\nPackage %v was not installed with ezdeb\n", pkg)
+				fmt.Println(Red, "\n\nPackage ", pkg, " was not installed with ezdeb", Reset)
 				continue
 			}
 
 			if err := uninstallPkg(pkg); err != nil {
-				fmt.Printf("\n\nFailed to uninstall package %v\n", pkg)
+				fmt.Println(Red, "\n\nFailed to uninstall package ", pkg, Reset)
 				continue
 			} else {
 				if err := deletePkgConfig(pkg); err != nil {
-					fmt.Printf("\n\nPackage %v successfully uninstalled but config not removed\n", pkg)
+					fmt.Println(Yellow, "\n\nPackage ", pkg, " successfully uninstalled but config not removed", Reset)
 				} else {
-					fmt.Printf("\n\nPackage %v successfully uninstalled\n", pkg)
+					fmt.Println(Green, "\n\nPackage ", pkg, " successfully uninstalled\n", Reset)
 					logger.Infof("uninstall: %v", pkg)
 				}
 			}

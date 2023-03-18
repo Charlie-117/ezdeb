@@ -29,14 +29,14 @@ var listCmd = &cobra.Command{
 
 			homeDir, err := os.UserHomeDir()
 			if err != nil {
-				fmt.Print("Error: failed to get user home directory")
+				fmt.Println(Red, "Error: failed to get user home directory", Reset)
 				return
 			}
 			pkgPath := filepath.Join(homeDir, ".ezdeb", "packages")
 
 			err = filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
 				if err != nil {
-					fmt.Print("Error: failed to access path")
+					fmt.Println(Red, "Error: failed to access path", Reset)
 					return err
 				}
 				if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") {
@@ -48,7 +48,7 @@ var listCmd = &cobra.Command{
 				return nil
 			})
 			if err != nil {
-				fmt.Print("Error: failed to list packages")
+				fmt.Print(Red, "Error: failed to list packages", Reset)
 				return
 			}
 
@@ -56,7 +56,7 @@ var listCmd = &cobra.Command{
 				fmt.Println("No packages installed")
 				return
 			}
-			fmt.Println("\nTotal number of installed packages:", count)
+			fmt.Println(Green, "\nTotal number of installed packages:", count, Reset)
 			return
 		}
 
@@ -66,11 +66,11 @@ var listCmd = &cobra.Command{
 		for _, pkg := range packages {
 			pkgMap := pkg.(map[string]interface{})
 
-			fmt.Println(pkgMap["name"], " - ", pkgMap["description"], "\n")
+			fmt.Println(Cyan, pkgMap["name"], Reset, " - ", pkgMap["description"], "\n")
 			count++
 		}
 
-		fmt.Println("\nTotal number of packages:", count)
+		fmt.Println(Green, "\nTotal number of packages:", count, Reset)
 	},
 }
 

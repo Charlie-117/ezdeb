@@ -15,6 +15,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const (
+	Green = "\033[32m"
+	Red = "\033[31m"
+	Cyan = "\033[36m"
+	Blue = "\033[34m"
+	Magneta = "\033[35m"
+	Yellow = "\033[33m"
+	Reset = "\033[0m"
+)
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "ezdeb",
@@ -49,7 +59,7 @@ func Execute() {
 	listAge := time.Since(listModTime)
 
 	if listAge > 24 * time.Hour {
-		fmt.Println("\n\n******\n\nPackage list is older than 24 hours. Run 'ezdeb sync' to update the package list.\n\n******")
+		fmt.Println(Yellow, "\n\n******\n\nPackage list is older than 24 hours. Run 'ezdeb sync' to update the package list.\n\n******", Reset)
 	}
 }
 
@@ -85,7 +95,7 @@ func initConfig() {
 	// If a config file is found, read it in.
 	// else print a msg and sync it
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("******\n\nPackage list does not exist.\nSyncing package list from repository.\n\n******")
+		fmt.Println(Yellow, "******\n\nPackage list does not exist.\nSyncing package list from repository.\n\n******", Reset)
 		syncCmd.Run(rootCmd, []string{})
 		panic(fmt.Errorf("Run the command again, if it doesn't work then contact us with the debug message"))
 	}

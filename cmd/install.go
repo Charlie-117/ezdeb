@@ -308,21 +308,21 @@ var installCmd = &cobra.Command{
 		}
 
 		if (len(args) < 1) {
-			fmt.Println("Please provide a package name")
+			fmt.Println(Red, "Please provide a package name", Reset)
 			return
 		}
 
 		for _, pkg := range args {
 
-			fmt.Printf("\n\nInstalling package %v\n", pkg)
+			fmt.Println(Yellow, "\n\nInstalling package ", pkg, Reset)
 
 			if isInstalled(pkg) {
-				fmt.Printf("\n\nPackage %v is already installed\n", pkg)
+				fmt.Println(Green, "\n\nPackage ", pkg, " is already installed", Reset)
 				continue
 			}
 
 			if !searchPkgDetails(pkg) {
-				fmt.Printf("\n\nPackage %v not found\n", pkg)
+				fmt.Println(Red, "\n\nPackage ", pkg, "not found", Reset)
 				continue
 			}
 
@@ -331,17 +331,17 @@ var installCmd = &cobra.Command{
 					if err = installPackage(location); err == nil {
 						if err = storePackageDetails(pkg, debName); err == nil {
 							logger.Infof("install: %v", pkg)
-							fmt.Printf("\n\nPackage %v installed successfully\n", pkg)
+							fmt.Println(Green, "\n\nPackage ", pkg, " installed successfully\n", Reset)
 						} else {
-							fmt.Printf("\n\nPackage %v successfully installed but not logged", pkg)
+							fmt.Println(Yellow, "\n\nPackage ", pkg, " successfully installed but not logged", Reset)
 							continue
 						}
 					} else {
-						fmt.Printf("\n\nFailed to install package %v\n", pkg)
+						fmt.Println(Red, "\n\nFailed to install package ", pkg, Reset)
 						continue
 					}
 				} else {
-					fmt.Printf("\n\nFailed to fetch package %v\n", pkg)
+					fmt.Println(Red, "\n\nFailed to fetch package ", pkg, Reset)
 					continue
 				}
 			} else if pkgurl != "" {
@@ -349,17 +349,17 @@ var installCmd = &cobra.Command{
 					if err = installPackage(location); err == nil {
 						if err = storePackageDetails(pkg, debName); err == nil {
 							logger.Infof("install: %v", pkg)
-							fmt.Printf("\n\nPackage %v installed successfully\n", pkg)
+							fmt.Println(Green, "\n\nPackage ", pkg, " installed successfully", Reset)
 						} else {
-							fmt.Printf("\n\nPackage %v successfully installed but not logged", pkg)
+							fmt.Println(Green, "\n\nPackage ", pkg, " successfully installed but not logged", Reset)
 							continue
 						}
 					} else {
-						fmt.Printf("\n\nFailed to install package %v\n", pkg)
+						fmt.Println(Red, "\n\nFailed to install package ", pkg, Reset)
 						continue
 					}
 				} else {
-					fmt.Printf("\n\nFailed to fetch package %v\n", pkg)
+					fmt.Println(Red, "\n\nFailed to fetch package ", pkg, Reset)
 					continue
 				}
 			}

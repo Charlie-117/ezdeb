@@ -31,13 +31,13 @@ var cleanCmd = &cobra.Command{
 
 		err := filepath.Walk(tempPath, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
-				fmt.Print("Error: failed to access path")
+				fmt.Print(Red, "Error: failed to access path", Reset)
 				return err
 			}
 			if !info.IsDir() && strings.HasSuffix(info.Name(), ".deb") {
 				err := os.Remove(path)
 				if err != nil {
-					fmt.Print("Error: failed to delete file" + path)
+					fmt.Print(Red, "Error: failed to delete file" + path, Reset)
 					return err
 				}
 				fmt.Println("Deleted: " + path)
@@ -45,7 +45,7 @@ var cleanCmd = &cobra.Command{
 			return nil
 		})
 		if err != nil {
-			fmt.Print("Error: failed to delete temporary files")
+			fmt.Print(Red, "Error: failed to delete temporary files", Reset)
 			return
 		}
 		fmt.Println("Done!")

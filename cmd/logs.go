@@ -50,7 +50,7 @@ func readLog(action string) {
 	// return error if failed
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		fmt.Println("failed to get home directory")
+		fmt.Println(Red, "failed to get home directory", Reset)
 		return
 	}
 
@@ -59,18 +59,18 @@ func readLog(action string) {
 	// check if log file size is 0
 	logInfo, err := os.Stat(logFile)
 	if err != nil {
-		fmt.Println("Failed to read log file, execute some action to generate it.")
+		fmt.Println(Red, "Failed to read log file, execute some action to generate it.", Reset)
 		return
 	}
 	if logInfo.Size() == 0 {
-		fmt.Println("Log file is empty")
+		fmt.Println(Red, "Log file is empty", Reset)
 		return
 	}
 
 	// open the log file
 	file, err := os.Open(logFile)
 	if err != nil {
-		fmt.Println("Failed to open log file")
+		fmt.Println(Red, "Failed to open log file", Reset)
 		return
 	}
 	defer file.Close()
@@ -116,7 +116,7 @@ func readLog(action string) {
 	}
 
 	if count == 0 {
-		fmt.Println("Specified action is not present in the log file")
+		fmt.Println(Yellow, "Specified action is not present in the log file", Reset)
 	}
 }
 
@@ -135,7 +135,7 @@ var logsCmd = &cobra.Command{
 		} else if cmd.Flag("action").Value.String() == "update" {
 			readLog("update")
 		} else {
-			fmt.Println("Invalid action, use -h to see available actions")
+			fmt.Println(Red, "Invalid action, use -h to see available actions", Reset)
 		}
 	},
 }

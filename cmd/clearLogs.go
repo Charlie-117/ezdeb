@@ -22,7 +22,7 @@ var clearLogsCmd = &cobra.Command{
 
 		homeDir, err := os.UserHomeDir()
 		if err != nil {
-			fmt.Println("failed to get home directory")
+			fmt.Println(Red, "failed to get home directory", Reset)
 			return
 		}
 
@@ -31,7 +31,7 @@ var clearLogsCmd = &cobra.Command{
 		// replace the logs file with empty file
 		err = os.Truncate(logFile, 0)
 		if err != nil {
-			fmt.Println("Failed to clear log file")
+			fmt.Println(Red, "Failed to clear log file", Reset)
 			return
 		}
 
