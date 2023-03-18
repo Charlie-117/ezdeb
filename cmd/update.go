@@ -228,8 +228,8 @@ func askBeforeUpdate(pkg string) bool {
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update all packages",
-	Long: `Usage: ezdeb update`,
+	Short: "Update all packages or specific package(s)",
+	Long: `Usage: ezdeb update [pkg]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 
@@ -264,7 +264,31 @@ var updateCmd = &cobra.Command{
 		err = listPkgConfigs(dirPath)
 		if err != nil {
 			fmt.Println("Failed to list package configs")
+			fmt.Println("Install a package first before updating...")
 			return
+		}
+
+		if len(args) > 0 {
+			argFound := false
+			pkgSlice := make([]string, len(args))
+			for _, pkg := range args {
+				argFound = false
+				for _, check := range pkgNames {
+					if pkg == check {
+						pkgSlice = append(pkgSlice, pkg)
+						argFound = true
+						break
+					}
+				}
+				if !argFound {
+					fmt.Println("Package", pkg, "is not installed\n")
+				}
+			}
+
+			pkgNames = pkgNames[:0]
+			for _, pkg := range pkgSlice {
+				pkgNames = append(pkgNames, pkg)
+			}
 		}
 
 		for _, pkg := range pkgNames {
