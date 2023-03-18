@@ -211,6 +211,20 @@ func checkUpdateUrl(pkg string, url string) (bool, error) {
 
 }
 
+func askBeforeUpdate(pkg string) bool {
+	var askUpdate string
+	// ask if the user wants to update the package
+	fmt.Println("Update available for package:", pkg)
+	fmt.Print(Cyan, "Do you want to update the package? (y/n)", Reset)
+	fmt.Scanln(&askUpdate)
+	askUpdate = strings.ToLower(askUpdate)
+	if askUpdate == "y" {
+		return true
+	} else {
+		return false
+	}
+}
+
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
@@ -261,22 +275,27 @@ var updateCmd = &cobra.Command{
 					if ghuser != "" && ghrepo != "" {
 						if check, err := checkUpdateGh(pkg, ghuser, ghrepo); err == nil && check {
 							if cmd.Flag("check-only").Value.String() != "true" {
-								if location, err := fetchGithubRelease(ghuser, ghrepo); err == nil {
-									if err = installPackage(location); err == nil {
-										if err = storePackageDetails(pkg, debName); err == nil {
-											logger.Infof("update: %v", pkg)
-											fmt.Printf("Package %v updated successfully\n\n", pkg)
-											continue
+								if askBeforeUpdate(pkg) {
+									if location, err := fetchGithubRelease(ghuser, ghrepo); err == nil {
+										if err = installPackage(location); err == nil {
+											if err = storePackageDetails(pkg, debName); err == nil {
+												logger.Infof("update: %v", pkg)
+												fmt.Printf("Package %v updated successfully\n\n", pkg)
+												continue
+											} else {
+												fmt.Printf("Package %v successfully updated but not logged\n\n", pkg)
+												continue
+											}
 										} else {
-											fmt.Printf("Package %v successfully updated but not logged\n\n", pkg)
+											fmt.Printf("Failed to update package %v\n\n", pkg)
 											continue
 										}
 									} else {
-										fmt.Printf("Failed to update package %v\n\n", pkg)
+										fmt.Printf("Failed to fetch package %v\n\n", pkg)
 										continue
 									}
 								} else {
-									fmt.Printf("Failed to fetch package %v\n\n", pkg)
+									fmt.Printf("Skipped updating package\n\n")
 									continue
 								}
 							} else {
