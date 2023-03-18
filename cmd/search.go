@@ -12,12 +12,15 @@ import (
 	"github.com/spf13/viper"
 )
 
+var searchRsltCount = 0
+
 func searchName(searchTerm string, packages []interface{}) bool {
 	pkgFound := false
 	for _, pkg := range packages {
 		pkgMap := pkg.(map[string]interface{})
 		if strings.Contains(strings.ToLower(pkgMap["name"].(string)), searchTerm) {
-			fmt.Printf("%v - %v\n", pkgMap["name"], pkgMap["description"])
+			searchRsltCount++
+			fmt.Println(Cyan, pkgMap["name"], Reset, " - ", pkgMap["description"], "\n")
 			pkgFound = true
 		}
 	}
@@ -29,7 +32,8 @@ func searchDesc(searchTerm string, packages []interface{}) bool {
 	for _, pkg := range packages {
 		pkgMap := pkg.(map[string]interface{})
 		if strings.Contains(strings.ToLower(pkgMap["description"].(string)), searchTerm) {
-			fmt.Printf("%v - %v\n", pkgMap["name"], pkgMap["description"])
+			searchRsltCount++
+			fmt.Println(Cyan, pkgMap["name"], Reset, " - ", pkgMap["description"], "\n")
 			pkgFound = true
 		}
 	}
@@ -45,10 +49,11 @@ var searchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// exit if no args is provided
 		if len(args) < 1 {
-			fmt.Println("Please provide a search term")
+			fmt.Println(Red, "Please provide a search term", Reset)
 			return
 		}
 
+		fmt.Println("Searching through packages...\n")
 		packages := viper.Get("packages").([]interface{})
 		pkgFound := false
 
@@ -74,6 +79,8 @@ var searchCmd = &cobra.Command{
 				}
 			}
 		}
+
+		fmt.Println(Green, "Found", searchRsltCount, "results", Reset)
 	},
 }
 
