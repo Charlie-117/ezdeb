@@ -255,7 +255,7 @@ var updateCmd = &cobra.Command{
 
 		homeDir, err := os.UserHomeDir()
 		if err != nil {
-			fmt.Println("Failed to get user home directory")
+			fmt.Println(Red, "Failed to get user home directory", Reset)
 			return
 		}
 
@@ -263,8 +263,8 @@ var updateCmd = &cobra.Command{
 
 		err = listPkgConfigs(dirPath)
 		if err != nil {
-			fmt.Println("Failed to list package configs")
-			fmt.Println("Install a package first before updating...")
+			fmt.Println(Yellow, "Failed to list package configs", Reset)
+			fmt.Println(Yellow, "Install a package first before updating...", Reset)
 			return
 		}
 
@@ -281,7 +281,7 @@ var updateCmd = &cobra.Command{
 					}
 				}
 				if !argFound {
-					fmt.Println("Package", pkg, "is not installed\n")
+					fmt.Println(Yellow, "Package", pkg, "is not installed\n", Reset)
 				}
 			}
 
@@ -293,7 +293,7 @@ var updateCmd = &cobra.Command{
 
 		for _, pkg := range pkgNames {
 			if checkIfInstalled(pkg) {
-				fmt.Printf("Checking update for %v\n", pkg)
+				fmt.Println(Cyan, "Checking update for", pkg, "...", Reset)
 				// fn from install.go
 				if searchPkgDetails(pkg) {
 					if ghuser != "" && ghrepo != "" {
@@ -304,29 +304,29 @@ var updateCmd = &cobra.Command{
 										if err = installPackage(location); err == nil {
 											if err = storePackageDetails(pkg, debName); err == nil {
 												logger.Infof("update: %v", pkg)
-												fmt.Printf("Package %v updated successfully\n\n", pkg)
+												fmt.Println(Green, "Package", pkg, "updated successfully\n", Reset)
 												continue
 											} else {
-												fmt.Printf("Package %v successfully updated but not logged\n\n", pkg)
+												fmt.Println(Yellow, "Package", pkg, "successfully updated but not logged\n", Reset)
 												continue
 											}
 										} else {
-											fmt.Printf("Failed to update package %v\n\n", pkg)
+											fmt.Println(Red, "Failed to update package", pkg, "\n", Reset)
 											continue
 										}
 									} else {
-										fmt.Printf("Failed to fetch package %v\n\n", pkg)
+										fmt.Println(Red, "Failed to fetch package", pkg, "\n", Reset)
 										continue
 									}
 								} else {
-									fmt.Printf("Skipped updating package\n\n")
+									fmt.Println(Yellow, "Skipped updating package\n", Reset)
 									continue
 								}
 							} else {
-								fmt.Printf("Update available for package: %v\n\n", pkg)
+								fmt.Println(Yellow, "Update available for package:", pkg, "\n", Reset)
 							}
 						} else {
-							fmt.Printf("Package %v is up to date\n\n", pkg)
+							fmt.Println(Green, "Package", pkg, "is up to date\n", Reset)
 							continue
 						}
 					} else if pkgurl != "" {
@@ -336,32 +336,32 @@ var updateCmd = &cobra.Command{
 									if err = installPackage(location); err == nil {
 										if err = storePackageDetails(pkg, debName); err == nil {
 											logger.Infof("update: %v", pkg)
-											fmt.Printf("Package %v updated successfully\n\n", pkg)
+											fmt.Println(Green, "Package", pkg, "updated successfully\n", Reset)
 										} else {
-											fmt.Printf("Package %v successfully updated but not logged\n\n", pkg)
+											fmt.Println(Yellow, "Package", pkg, "successfully updated but not logged\n", Reset)
 											continue
 										}
 									} else {
-										fmt.Printf("Failed to updated package %v\n\n", pkg)
+										fmt.Println(Red, "Failed to update package", pkg, "\n", Reset)
 										continue
 									}
 								} else {
-									fmt.Printf("Failed to fetch package %v\n\n", pkg)
+									fmt.Println(Red, "Failed to fetch package", pkg, "\n", Reset)
 									continue
 								}
 							} else {
-								fmt.Printf("Update available for package: %v\n\n", pkg)
+								fmt.Println(Yellow, "Update available for package:", pkg, "\n", Reset)
 							}
 						} else {
-							fmt.Printf("Package %v is up to date\n\n", pkg)
+							fmt.Println(Green, "Package", pkg, "is up to date\n", Reset)
 							continue
 						}
 					} else {
-						fmt.Printf("Failed to fetch details for Package %v\n\n", pkg)
+						fmt.Println(Red, "Failed to fetch details for Package", pkg, "\n", Reset)
 						continue
 					}
 				} else {
-					fmt.Printf("Package %v details not found\n\n", pkg)
+					fmt.Println(Red, "Package", pkg, "details not found", "\n", Reset)
 					continue
 				}
 			} else {
