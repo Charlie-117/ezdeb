@@ -18,7 +18,8 @@ import (
 var syncCmd = &cobra.Command{
 	Use:   "sync",
 	Short: "Sync the packageList from the remote repository",
-	Long: `Usage: ezdeb sync`,
+	Long: `Sync the packageList from the remote repository
+Usage: ezdeb sync`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		/*

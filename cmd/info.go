@@ -15,7 +15,8 @@ import (
 var infoCmd = &cobra.Command{
 	Use:   "info",
 	Short: "Show information about a particular package",
-	Long: `Usage: ezdeb info <package_name>`,
+	Long: `Show information about a particular package
+Usage: ezdeb info <package_name>`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) < 1 {
 			fmt.Println(Red, "Please provide a package name", Reset)

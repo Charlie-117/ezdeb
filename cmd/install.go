@@ -284,7 +284,8 @@ func storePackageDetails(packageName string, packageVersion string) error {
 var installCmd = &cobra.Command{
 	Use:   "install",
 	Short: "Install a package",
-	Long: `Usage: ezdeb install <package_name>`,
+	Long: `Install a package
+Usage: ezdeb install <package_name>`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		/*

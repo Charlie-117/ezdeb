@@ -82,7 +82,8 @@ func deletePkgConfig(pkgName string) error {
 var uninstallCmd = &cobra.Command{
 	Use:   "uninstall",
 	Short: "Uninstall a package",
-	Long: `Usage: ezdeb uninstall <package_name>`,
+	Long: `Uninstall a package
+Usage: ezdeb uninstall <package_name>`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		/*

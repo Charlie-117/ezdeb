@@ -17,7 +17,8 @@ import (
 var cleanCmd = &cobra.Command{
 	Use:   "clean",
 	Short: "Cleans temporary deb files",
-	Long: `Usage: ezdeb clean`,
+	Long: `Cleans temporary deb files
+Usage: ezdeb clean`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// delete .deb files in os.TempDir() directory
 		fmt.Println("Cleaning temporary deb files...")

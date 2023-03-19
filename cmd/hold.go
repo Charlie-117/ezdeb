@@ -64,7 +64,8 @@ func isHeldPkg(pkg string) (bool, error) {
 var holdCmd = &cobra.Command{
 	Use:   "hold",
 	Short: "Hold packages from updating",
-	Long: `Usage: ezdeb hold <package_name>`,
+	Long: `Hold packages from updating
+Usage: ezdeb hold <package_name>`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// init logging
 		logger, err := InitLogger()

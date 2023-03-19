@@ -16,7 +16,8 @@ import (
 var clearLogsCmd = &cobra.Command{
 	Use:   "clearLogs",
 	Short: "Clear logs",
-	Long: `Usage: ezdeb clearLogs`,
+	Long: `Clear logs
+Usage: ezdeb clearLogs`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Clearings logs...")
 

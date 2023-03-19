@@ -45,7 +45,8 @@ func searchDesc(searchTerm string, packages []interface{}) bool {
 var searchCmd = &cobra.Command{
 	Use:   "search",
 	Short: "Search for a package",
-	Long: `Usage: ezdeb search <search_term>`,
+	Long: `Search for a package
+Usage: ezdeb search <search_term>`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// exit if no args is provided
 		if len(args) < 1 {

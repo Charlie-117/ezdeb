@@ -148,7 +148,8 @@ func readLog(action string) {
 var logsCmd = &cobra.Command{
 	Use:   "logs",
 	Short: "Show logs",
-	Long: `Usage: ezdeb logs [flags]`,
+	Long: `Show logs
+Usage: ezdeb logs [flags]`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if cmd.Flag("action").Value.String() == "" {
 			readLog("all")

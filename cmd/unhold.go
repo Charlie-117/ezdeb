@@ -46,7 +46,8 @@ func unholdPkg(pkgName string) error {
 var unholdCmd = &cobra.Command{
 	Use:   "unhold",
 	Short: "Unhold held packages",
-	Long: `Usage: ezdeb unhold [flags] [package_name]`,
+	Long: `Unhold held packages
+Usage: ezdeb unhold [flags] [package_name]`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// init logging
 		logger, err := InitLogger()

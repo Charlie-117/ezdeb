@@ -229,7 +229,8 @@ func askBeforeUpdate(pkg string) bool {
 var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update all packages or specific package(s)",
-	Long: `Usage: ezdeb update [pkg]`,
+	Long: `Update all packages or specific package(s)
+Usage: ezdeb update [pkg]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 

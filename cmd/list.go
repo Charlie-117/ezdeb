@@ -18,7 +18,8 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all available packages",
-	Long: `Usage: ezdeb list`,
+	Long: `List all available packages
+Usage: ezdeb list`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		count := 0
