@@ -16,7 +16,7 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version of ezdeb",
 	Long: `Print the version of ezdeb`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("version 0.1")
+		fmt.Println("version 1.0")
 	},
 }
 
