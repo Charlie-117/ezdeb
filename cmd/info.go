@@ -47,6 +47,11 @@ var infoCmd = &cobra.Command{
 				} else {
 					fmt.Println("Installed: No")
 				}
+				if held, err := isHeldPkg(pkgName); err == nil && held {
+					fmt.Println("Held: Yes")
+				} else {
+					fmt.Println("Held: No")
+				}
 				return
 			}
 		}
