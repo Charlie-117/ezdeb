@@ -104,14 +104,5 @@ Usage: ezdeb unhold [flags] [package_name]`,
 func init() {
 	rootCmd.AddCommand(unholdCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// unholdCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// unholdCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	unholdCmd.Flags().BoolP("all", "a", false, "Unhold all held packages")
 }
