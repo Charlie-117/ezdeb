@@ -42,7 +42,7 @@ var listCmd = &cobra.Command{
 				if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") {
 					// trim .json suffix from file name
 					fileName := strings.TrimSuffix(info.Name(), filepath.Ext(info.Name()))
-					fmt.Println(fileName)
+					fmt.Println(Cyan, fileName, Reset)
 					count++
 				}
 				return nil
@@ -58,6 +58,34 @@ var listCmd = &cobra.Command{
 			}
 			fmt.Println(Green, "\nTotal number of installed packages:", count, Reset)
 			return
+		}
+
+		// List only held packages if flag is set
+		if cmd.Flag("held").Value.String() == "true" {
+			fmt.Println("Listing held packages\n")
+
+			homeDir, err := os.UserHomeDir()
+			if err != nil {
+				fmt.Println(Red, "Failed to get user home directory", Reset)
+				return
+			}
+
+			heldDirPath := filepath.Join(homeDir, ".ezdeb", "held")
+
+			listHeldPkgs(heldDirPath)
+
+			if len(heldPkgNames) == 0 {
+				fmt.Println("No held packages")
+				return
+			}
+
+			for _, heldPkg := range heldPkgNames {
+				fmt.Println(Cyan, heldPkg, Reset)
+			}
+
+			fmt.Println(Green, "\nTotal number of held packages:", len(heldPkgNames), Reset)
+			return
+
 		}
 
 		fmt.Println("Available packages:\n")
@@ -87,4 +115,5 @@ func init() {
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	listCmd.Flags().BoolP("installed", "i", false, "List only installed packages")
+	listCmd.Flags().BoolP("held", "l", false, "List only held packages")
 }
