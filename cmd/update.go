@@ -299,27 +299,32 @@ var updateCmd = &cobra.Command{
 					if ghuser != "" && ghrepo != "" {
 						if check, err := checkUpdateGh(pkg, ghuser, ghrepo); err == nil && check {
 							if cmd.Flag("check-only").Value.String() != "true" {
-								if askBeforeUpdate(pkg) {
-									if location, err := fetchGithubRelease(ghuser, ghrepo); err == nil {
-										if err = installPackage(location); err == nil {
-											if err = storePackageDetails(pkg, debName); err == nil {
-												logger.Infof("update: %v", pkg)
-												fmt.Println(Green, "Package", pkg, "updated successfully\n", Reset)
-												continue
+								if held, err := isHeldPkg(pkg); err == nil && !held {
+									if askBeforeUpdate(pkg) {
+										if location, err := fetchGithubRelease(ghuser, ghrepo); err == nil {
+											if err = installPackage(location); err == nil {
+												if err = storePackageDetails(pkg, debName); err == nil {
+													logger.Infof("update: %v", pkg)
+													fmt.Println(Green, "Package", pkg, "updated successfully\n", Reset)
+													continue
+												} else {
+													fmt.Println(Yellow, "Package", pkg, "successfully updated but not logged\n", Reset)
+													continue
+												}
 											} else {
-												fmt.Println(Yellow, "Package", pkg, "successfully updated but not logged\n", Reset)
+												fmt.Println(Red, "Failed to update package", pkg, "\n", Reset)
 												continue
 											}
 										} else {
-											fmt.Println(Red, "Failed to update package", pkg, "\n", Reset)
+											fmt.Println(Red, "Failed to fetch package", pkg, "\n", Reset)
 											continue
 										}
 									} else {
-										fmt.Println(Red, "Failed to fetch package", pkg, "\n", Reset)
+										fmt.Println(Yellow, "Skipped updating package\n", Reset)
 										continue
 									}
 								} else {
-									fmt.Println(Yellow, "Skipped updating package\n", Reset)
+									fmt.Println(Yellow, "Skipped updating locked package", pkg, "\n", Reset)
 									continue
 								}
 							} else {
@@ -332,26 +337,31 @@ var updateCmd = &cobra.Command{
 					} else if pkgurl != "" {
 						if check, err := checkUpdateUrl(pkg, pkgurl); err == nil && check {
 							if cmd.Flag("check-only").Value.String() != "true" {
-								if askBeforeUpdate(pkg) {
-									if location, err := fetchPackage(pkgurl); err == nil {
-										if err = installPackage(location); err == nil {
-											if err = storePackageDetails(pkg, debName); err == nil {
-												logger.Infof("update: %v", pkg)
-												fmt.Println(Green, "Package", pkg, "updated successfully\n", Reset)
+								if held, err := isHeldPkg(pkg); err == nil && !held {
+									if askBeforeUpdate(pkg) {
+										if location, err := fetchPackage(pkgurl); err == nil {
+											if err = installPackage(location); err == nil {
+												if err = storePackageDetails(pkg, debName); err == nil {
+													logger.Infof("update: %v", pkg)
+													fmt.Println(Green, "Package", pkg, "updated successfully\n", Reset)
+												} else {
+													fmt.Println(Yellow, "Package", pkg, "successfully updated but not logged\n", Reset)
+													continue
+												}
 											} else {
-												fmt.Println(Yellow, "Package", pkg, "successfully updated but not logged\n", Reset)
+												fmt.Println(Red, "Failed to update package", pkg, "\n", Reset)
 												continue
 											}
 										} else {
-											fmt.Println(Red, "Failed to update package", pkg, "\n", Reset)
+											fmt.Println(Red, "Failed to fetch package", pkg, "\n", Reset)
 											continue
 										}
 									} else {
-										fmt.Println(Red, "Failed to fetch package", pkg, "\n", Reset)
+										fmt.Println(Yellow, "Skipped updating package\n", Reset)
 										continue
 									}
 								} else {
-									fmt.Println(Yellow, "Skipped updating package\n", Reset)
+									fmt.Println(Yellow, "Skipped updating locked package", pkg, "\n", Reset)
 									continue
 								}
 							} else {
