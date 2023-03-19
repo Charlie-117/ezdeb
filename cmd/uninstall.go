@@ -128,6 +128,12 @@ var uninstallCmd = &cobra.Command{
 				if err := deletePkgConfig(pkg); err != nil {
 					fmt.Println(Yellow, "\n\nPackage ", pkg, " successfully uninstalled but config not removed", Reset)
 				} else {
+					if held, err := isHeldPkg(pkg); err == nil && held {
+						err = unholdPkg(pkg)
+						if err != nil {
+							fmt.Println(Red, "\n\nFailed to unhold package ", pkg, Reset)
+						}
+					}
 					fmt.Println(Green, "\n\nPackage ", pkg, " successfully uninstalled\n", Reset)
 					logger.Infof("uninstall: %v", pkg)
 				}
