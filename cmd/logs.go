@@ -28,6 +28,10 @@ func formatAction(logLine string) string {
 		return "install"
 	} else if strings.Contains(logLine, "update") {
 		return "update"
+	} else if strings.Contains(logLine, "\"hold") {
+		return "hold"
+	} else if strings.Contains(logLine, "\"unhold") {
+		return "unhold"
 	} else {
 		return "unknown"
 	}
@@ -39,6 +43,10 @@ func formatPkg(logLine string) string {
 	} else if strings.Contains(logLine, "\"install") {
 		return fmt.Sprintf("%s%s", "\"", logLine[58:])
 	} else if strings.Contains(logLine, "update") {
+		return fmt.Sprintf("%s%s", "\"", logLine[57:])
+	} else if strings.Contains(logLine, "\"hold") {
+		return fmt.Sprintf("%s%s", "\"", logLine[55:])
+	} else if strings.Contains(logLine, "\"unhold") {
 		return fmt.Sprintf("%s%s", "\"", logLine[57:])
 	} else {
 		return "unknown"
@@ -113,6 +121,22 @@ func readLog(action string) {
 				count++
 			}
 		}
+	} else if action == "hold" {
+		for scanner.Scan() {
+			logLine := 	scanner.Text()
+			if strings.Contains(logLine, "\"hold") {
+				fmt.Printf("time: %s action: hold package: %s\n", formatTime(logLine), formatPkg(logLine))
+				count++
+			}
+		}
+	} else if action == "unhold" {
+		for scanner.Scan() {
+			logLine := 	scanner.Text()
+			if strings.Contains(logLine, "\"unhold") {
+				fmt.Printf("time: %s action: unhold package: %s\n", formatTime(logLine), formatPkg(logLine))
+				count++
+			}
+		}
 	}
 
 	if count == 0 {
@@ -134,6 +158,10 @@ var logsCmd = &cobra.Command{
 			readLog("uninstall")
 		} else if cmd.Flag("action").Value.String() == "update" {
 			readLog("update")
+		} else if cmd.Flag("action").Value.String() == "hold" {
+			readLog("hold")
+		} else if cmd.Flag("action").Value.String() == "unhold" {
+			readLog("unhold")
 		} else {
 			fmt.Println(Red, "Invalid action, use -h to see available actions", Reset)
 		}
