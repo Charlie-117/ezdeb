@@ -8,14 +8,7 @@
       "ghrepo": "drawio-desktop"
     },
     {
-      "name": "freetube",
-      "source": "github",
-      "description": "An Open Source YouTube app for privacy",
-      "ghuser": "FreeTubeApp",
-      "ghrepo": "FreeTube"
-    },
-    {
-      "name": "OnlyOffice",
+      "name": "onlyoffice-desktopeditors",
       "source": "website",
       "description": "Work with documents, spreadsheets, presentations, fillable forms and PDF files on your PC",
       "link": "https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors_amd64.deb"
@@ -40,6 +33,209 @@
       "description": "Yet another cross-platform graphical process/system monitor",
       "ghuser": "ClementTsang",
       "ghrepo": "bottom"
+    },
+    {
+      "name": "heroic",
+      "source": "github",
+      "description": "An Open Source GOG and Epic games launcher.",
+      "ghuser": "Heroic-Games-Launcher",
+      "ghrepo": "HeroicGamesLauncher"
+    },
+    {
+      "name": "hyper",
+      "source": "website",
+      "description": "A terminal built on web technologies.",
+      "link": "https://releases.hyper.is/download/deb"
+    },
+    {
+      "name": "ksnip",
+      "source": "github",
+      "description": "Cross-platform screenshot and annotation tool.",
+      "ghuser": "ksnip",
+      "ghrepo": "ksnip"
+    },
+    {
+      "name": "lutris",
+      "source": "github",
+      "description": "Open Gaming Platform.",
+      "ghuser": "lutris",
+      "ghrepo": "lutris"
+    },
+    {
+      "name": "min",
+      "source": "github",
+      "description": "A fast, minimal browser.",
+      "ghuser": "minbrowser",
+      "ghrepo": "min"
+    },
+    {
+      "name": "minigalaxy",
+      "source": "github",
+      "description": "A simple GOG client for Linux.",
+      "ghuser": "sharkwouter",
+      "ghrepo": "minigalaxy"
+    },
+    {
+      "name": "motrix",
+      "source": "github",
+      "description": "A full-featured download manager.",
+      "ghuser": "agalwood",
+      "ghrepo": "Motrix"
+    },
+    {
+      "name": "mpdevil",
+      "source": "github",
+      "description": "A simple music browser for MPD.",
+      "ghuser": "SoongNoonien",
+      "ghrepo": "mpdevil"
+    },
+    {
+      "name": "notable",
+      "source": "website",
+      "description": "The Markdown-based note-taking app that doesn't suck.",
+      "link": "https://download.notable.app/?target=deb"
+    },
+    {
+      "name": "obs-cli",
+      "source": "github",
+      "description": "OBS-cli is a command-line remote control for OBS.",
+      "ghuser": "muesli",
+      "ghrepo": "obs-cli"
+    },
+    {
+      "name": "openaudible",
+      "source": "github",
+      "description": "A cross-platform desktop application for downloading and managing your Audible audiobooks.",
+      "ghuser": "openaudible",
+      "ghrepo": "openaudible"
+    },
+    {
+      "name": "sleek",
+      "source": "github",
+      "description": "Todo manager based on the todo.txt syntax for Linux, free and open-source (FOSS).",
+      "ghuser": "ransome1",
+      "ghrepo": "sleek"
+    },
+    {
+      "name": "portmaster",
+      "source": "website",
+      "description": "Portmaster is a free and open-source application that puts you back in charge over all your computer's network connections.",
+      "link": "https://updates.safing.io/latest/linux_amd64/packages/portmaster-installer.deb"
+    },
+    {
+      "name": "tabby-terminal",
+      "source": "github",
+      "description": "A terminal for the modern age",
+      "ghuser": "Eugeny",
+      "ghrepo": "tabby"
+    },
+    {
+      "name": "whatsapp-for-linux",
+      "source": "github",
+      "description": "An unofficial WhatsApp desktop application for Linux.",
+      "ghuser": "eneshecan",
+      "ghrepo": "whatsapp-for-linux"
+    },
+    {
+      "name": "wraith-master",
+      "source": "github",
+      "description": "An application for controlling the RGB LEDs on AMD's Wraith stock coolers.",
+      "ghuser": "serebit",
+      "ghrepo": "wraith-master"
+    },
+    {
+      "name": "youtube-music",
+      "source": "github",
+      "description": "Open source, cross-platform, unofficial YouTube Music Desktop App with built-in ad blocker and downloader.",
+      "ghuser": "th-ch",
+      "ghrepo": "youtube-music"
+    },
+    {
+      "name": "zenith",
+      "source": "github",
+      "description": "Sort of like 'top' or 'htop' but with zoom-able charts.",
+      "ghuser": "bvaisvil",
+      "ghrepo": "zenith"
+    },
+    {
+      "name": "figma-linux",
+      "source": "github",
+      "description": "Unofficial Electron-based Figma desktop app for Linux.",
+      "ghuser": "Figma-Linux",
+      "ghrepo": "figma-linux"
+    },
+    {
+      "name": "flameshot",
+      "source": "github",
+      "description": "Flameshot is a free and open-source, cross-platform tool to take screenshots with many built-in features to save you time.",
+      "ghuser": "flameshot-org",
+      "ghrepo": "flameshot"
+    },
+    {
+      "name": "git-delta",
+      "source": "github",
+      "description": "A syntax-highlighting pager for 'git', 'diff', and 'grep' output.",
+      "ghuser": "dandavison",
+      "ghrepo": "delta"
+    },
+    {
+      "name": "grype",
+      "source": "github",
+      "description": "A vulnerability scanner for container images and filesystems.",
+      "ghuser": "anchore",
+      "ghrepo": "grype"
+    },
+    {
+      "name": "battery-monitor",
+      "source": "github",
+      "description": "An X-platform utility tool developed on Python, notifies about charging, discharging, and critically low battery state of the battery on laptop.",
+      "ghuser": "mamolinux",
+      "ghrepo": "battery-monitor"
+    },
+    {
+      "name": "bitwarden",
+      "source": "website",
+      "description": "Open Source Password Manager.",
+      "link": "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
+    },
+    {
+      "name": "blockbench",
+      "source": "github",
+      "description": "A low-poly 3D model editor",
+      "ghuser": "JannisX11",
+      "ghrepo": "blockbench"
+    },
+    {
+      "name": "code",
+      "source": "website",
+      "description": "Code editing. Redefined.",
+      "link": "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    },
+    {
+      "name": "codium",
+      "source": "github",
+      "description": "Community-driven, freely-licensed binary distribution of Microsoft's Code editor.",
+      "ghuser": "VSCodium",
+      "ghrepo": "vscodium"
+    },
+    {
+      "name": "discord",
+      "source": "website",
+      "description": "A place that makes it easy to talk every day and hang out more often.",
+      "link": "https://discord.com/api/download?platform=linux&format=deb"
+    },
+    {
+      "name": "anydesk",
+      "source": "website",
+      "description": "Access any device at any time. From anywhere. Always secure and fast.",
+      "link": "https://anydesk.com/en/downloads/linux?dv=deb_64"
+    },
+    {
+      "name": "duf",
+      "source": "github",
+      "description": "Disk Usage/Free Utility - a better 'df' alternative.",
+      "ghuser": "muesli",
+      "ghrepo": "duf"
     }
   ]
 }
