@@ -9,6 +9,9 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"net/http"
+	"io/ioutil"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -37,6 +40,23 @@ var rootCmd = &cobra.Command{
 	 },
 }
 
+func checkAppUpdate(url string, content string) (bool, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return false, err
+	}
+
+	fileContent := strings.Trim(string(body), "\n")
+
+	return fileContent == content, nil
+}
+
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
@@ -46,12 +66,24 @@ func Execute() {
 		os.Exit(1)
 	}
 
+	// check if application is up to date
+	// compare commit hash from version file in repository
+	// if different then show msg alerting user to update
+	check, err := checkAppUpdate("https://gitlab.com/Charlie-117/ezdeb/-/raw/master/release/version", "90985c299a5f5e28a44e7f7b7a3d68c5118cb5ed")
+	if err != nil {
+		fmt.Println(Red, "\n\nError checking for App update: " + err.Error() + Reset)
+	}
+	if !check {
+		fmt.Println(Yellow, "\n\n******\n\nAn update is available for EZDEB, please refer to guide for upgrading.\n\n******", Reset)
+	}
+
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Printf("Failed to get home directory: %v\n", err)
 		return
 	}
 
+	// check if packageList is updated within 24 hrs or not
 	listPath := filepath.Join(homeDir, ".ezdeb", "pkglist.json")
 	fileInfo, err := os.Stat(listPath)
 
