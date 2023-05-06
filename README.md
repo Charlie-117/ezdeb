@@ -11,12 +11,12 @@
 All software packages are not available on distribution's official repositories which is why ezdeb was created, it aims to maintain an up-to-date list of
 applications (.deb packages) distributed through GitHub and websites.
 
-## Features:    
-- Package listing, information and searching  
-  - List packages  
-    - View installed packages only  
-    - View held packages only  
-  - View package information  
+## Features
+- Package listing, information and searching
+  - List packages
+    - View installed packages only
+    - View held packages only
+  - View package information
   - Search packages
   - View application version
 - Package installation and uninstallation
@@ -40,7 +40,13 @@ applications (.deb packages) distributed through GitHub and websites.
   
 ## Screenshots
 
-## Building ezdeb from source:
+![Help command](.github/images/help.png)
+![Search command](.github/images/search.png)
+![List command](.github/images/list.png)
+![Info command](.github/images/info.png)
+![Uninstall command](.github/images/uninstall.png)
+
+## Building ezdeb from source
 
 Ensure you have a properly set-up GO  installation on your system.
 
